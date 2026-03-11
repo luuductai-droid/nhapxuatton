@@ -7,7 +7,28 @@ class InventoryApp {
         this.currentView = 'dashboard';
         this.init();
     }
+async function updateStock(barcode,change){
 
+const url=API_URL+
+"?action=updateQuantity"+
+"&barcode="+barcode+
+"&change="+change
+
+const res=await fetch(url)
+
+const data=await res.json()
+
+if(data.success){
+
+alert("Stock updated: "+data.data.quantity)
+
+}else{
+
+alert("Error")
+
+}
+
+}
     async init() {
         this.initEventListeners();
         this.initLanguageSupport();

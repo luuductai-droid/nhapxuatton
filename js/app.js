@@ -1,3 +1,4 @@
+const API_URL="https://docs.google.com/spreadsheets/d/1-MSYrLwDPONENoRfm2gvXpv0M7NIlpm8IkdOZclBZPw/edit?gid=0#gid=0"
 // Main Application Logic
 class InventoryApp {
     constructor() {

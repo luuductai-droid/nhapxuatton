@@ -21,7 +21,7 @@ return true
 
 }catch(error){
 
-console.error(error)
+console.error("Init error:",error)
 return false
 
 }
@@ -35,49 +35,19 @@ if(this.isScanning) return
 try{
 
 const config={
-fps:25,
-
-qrbox:function(width,height){
-
-const size=Math.min(width,height)*0.9
-
-return{
-width:size,
-height:size
-}
-
-},
-
+fps:20,
+qrbox:{width:250,height:250},
 aspectRatio:1.777
 }
 
 const cameras=await Html5Qrcode.getCameras()
 
 if(!cameras || cameras.length===0){
-
 alert("Không tìm thấy camera")
 return
-
 }
 
 let cameraId=cameras[cameras.length-1].id
-
-for(let i=0;i<cameras.length;i++){
-
-const label=cameras[i].label.toLowerCase()
-
-if(
-label.includes("back")||
-label.includes("rear")||
-label.includes("environment")
-){
-
-cameraId=cameras[i].id
-break
-
-}
-
-}
 
 await this.scanner.start(
 cameraId,
@@ -93,7 +63,7 @@ document.getElementById("stopScanBtn").style.display="block"
 
 }catch(error){
 
-console.error(error)
+console.error("Start error:",error)
 
 if(this.onScanError){
 this.onScanError(error.message)
@@ -107,12 +77,14 @@ stop(){
 
 if(this.scanner && this.isScanning){
 
-this.scanner.stop()
+this.scanner.stop().then(()=>{
 
 this.isScanning=false
 
 document.getElementById("startScanBtn").style.display="block"
 document.getElementById("stopScanBtn").style.display="none"
+
+})
 
 }
 
@@ -129,7 +101,9 @@ this.playBeep()
 document.getElementById("scanResult").innerHTML=
 "<div class='scan-box'>Barcode: "+barcode+"</div>"
 
-await this.lookupProduct(barcode)
+if(this.onScanSuccess){
+this.onScanSuccess(barcode)
+}
 
 }
 
@@ -140,67 +114,6 @@ return
 }
 
 console.warn(err)
-
-}
-
-async lookupProduct(barcode){
-
-try{
-
-const url=API_URL+"?action=getByBarcode&barcode="+barcode
-
-const res=await fetch(url)
-
-const data=await res.json()
-
-if(data.success){
-
-this.showProduct(data.data)
-
-}else{
-
-this.showAddProduct(barcode)
-
-}
-
-}catch(e){
-
-console.error(e)
-
-}
-
-}
-
-showProduct(product){
-
-const html=`
-
-<div class="product-card">
-
-<h3>${product.productName}</h3>
-
-<p>Barcode: ${product.barcode}</p>
-
-<p>Stock: ${product.quantity}</p>
-
-<button onclick="updateStock('${product.barcode}',1)">➕ Nhập kho</button>
-
-<button onclick="updateStock('${product.barcode}',-1)">➖ Xuất kho</button>
-
-</div>
-
-`
-
-document.getElementById("scanResult").innerHTML=html
-
-}
-
-showAddProduct(barcode){
-
-document.getElementById("modalBarcode").value=barcode
-document.getElementById("modalBarcodeDisplay").value=barcode
-
-document.getElementById("productModal").style.display="block"
 
 }
 

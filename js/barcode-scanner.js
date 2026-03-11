@@ -7,23 +7,31 @@ class BarcodeScanner {
         this.isScanning = false;
     }
 
-    async initialize() {
-        try {
-            // Check if browser supports camera
-            const devices = await navigator.mediaDevices.enumerateDevices();
-            const hasCamera = devices.some(device => device.kind === 'videoinput');
-            
-            if (!hasCamera) {
-                throw new Error('No camera found');
-            }
+   async initialize() {
+    try {
 
-            this.scanner = new Html5Qrcode("reader");
-            return true;
-        } catch (error) {
-            console.error('Scanner initialization failed:', error);
-            return false;
+        // xin quyền camera
+        await navigator.mediaDevices.getUserMedia({ video: true });
+
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const hasCamera = devices.some(device => device.kind === 'videoinput');
+
+        if (!hasCamera) {
+            throw new Error('No camera found');
         }
+
+        this.scanner = new Html5Qrcode("reader");
+
+        return true;
+
+    } catch (error) {
+
+        console.error('Scanner initialization failed:', error);
+
+        return false;
+
     }
+}
 
     async start() {
         if (this.isScanning) {

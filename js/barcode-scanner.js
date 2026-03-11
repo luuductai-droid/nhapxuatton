@@ -65,8 +65,18 @@ class BarcodeScanner {
                 ]
             };
 
-            await this.scanner.start(
-                { facingMode: "environment" },
+            const cameras = await Html5Qrcode.getCameras();
+
+if (cameras && cameras.length) {
+    const cameraId = cameras[0].id;
+
+    await this.scanner.start(
+        cameraId,
+        config,
+        this.handleScanSuccess.bind(this),
+        this.handleScanError.bind(this)
+    );
+}
                 config,
                 this.handleScanSuccess.bind(this),
                 this.handleScanError.bind(this)

@@ -2,7 +2,7 @@
 // Deploy this as a Web App
 
 const SHEET_NAME = 'Inventory';
-const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID'; // Optional, if not using bound script
+const SHEET_ID = 'https://docs.google.com/spreadsheets/d/1-MSYrLwDPONENoRfm2gvXpv0M7NIlpm8IkdOZclBZPw/edit?gid=0#gid=0'; // Optional, if not using bound script
 
 function doGet(e) {
   return handleRequest(e);

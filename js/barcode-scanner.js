@@ -34,66 +34,52 @@ class BarcodeScanner {
 }
 
     async start() {
-        if (this.isScanning) {
-            return;
-        }
 
-        try {
-            const qrboxFunction = function(viewfinderWidth, viewfinderHeight) {
-                const minEdgePercentage = 0.7;
-                const minEdgeSize = Math.min(viewfinderWidth, viewfinderHeight);
-                const qrboxSize = Math.floor(minEdgeSize * minEdgePercentage);
-                
-                return {
-                    width: qrboxSize,
-                    height: qrboxSize
-                };
-            };
-
-            const config = {
-                fps: 10,
-                qrbox: qrboxFunction,
-                aspectRatio: 1.0,
-                formatsToSupport: [
-                    Html5QrcodeSupportedFormats.EAN_13,
-                    Html5QrcodeSupportedFormats.EAN_8,
-                    Html5QrcodeSupportedFormats.UPC_A,
-                    Html5QrcodeSupportedFormats.UPC_E,
-                    Html5QrcodeSupportedFormats.CODE_39,
-                    Html5QrcodeSupportedFormats.CODE_128,
-                    Html5QrcodeSupportedFormats.QR_CODE
-                ]
-            };
-
-            const cameras = await Html5Qrcode.getCameras();
-
-if (cameras && cameras.length) {
-    const cameraId = cameras[0].id;
-
-    await this.scanner.start(
-        cameraId,
-        config,
-        this.handleScanSuccess.bind(this),
-        this.handleScanError.bind(this)
-    );
-}
-                config,
-                this.handleScanSuccess.bind(this),
-                this.handleScanError.bind(this)
-            );
-
-            this.isScanning = true;
-            document.getElementById('startScanBtn').style.display = 'none';
-            document.getElementById('stopScanBtn').style.display = 'block';
-            
-        } catch (error) {
-            console.error('Failed to start scanner:', error);
-            if (this.onScanError) {
-                this.onScanError(error.message);
-            }
-        }
+    if (this.isScanning) {
+        return;
     }
 
+    try {
+
+        const config = {
+            fps: 10,
+            qrbox: 250,
+            aspectRatio: 1.777
+        };
+
+        // lấy danh sách camera
+        const cameras = await Html5Qrcode.getCameras();
+
+        if (!cameras || cameras.length === 0) {
+            throw new Error("No camera found");
+        }
+
+        // camera sau (thường là camera cuối)
+        const cameraId = cameras[cameras.length - 1].id;
+
+        await this.scanner.start(
+            cameraId,
+            config,
+            this.handleScanSuccess.bind(this),
+            this.handleScanError.bind(this)
+        );
+
+        this.isScanning = true;
+
+        document.getElementById('startScanBtn').style.display = 'none';
+        document.getElementById('stopScanBtn').style.display = 'block';
+
+    } catch (error) {
+
+        console.error('Failed to start scanner:', error);
+
+        if (this.onScanError) {
+            this.onScanError(error.message);
+        }
+
+    }
+
+}
     stop() {
         if (this.scanner && this.isScanning) {
             this.scanner.stop()

@@ -18,19 +18,17 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-    background-color: var(--bg-color);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(180deg,#f6f8fb,#eef1f6);
     color: var(--text-color);
     line-height: 1.6;
-    -webkit-tap-highlight-color: transparent;
 }
 
 #app {
     max-width: 480px;
-    margin: 0 auto;
-    padding: var(--spacing);
+    margin: auto;
+    padding: 20px;
     min-height: 100vh;
-    position: relative;
 }
 
 /* Language Selector */
@@ -58,16 +56,16 @@ body {
 
 /* Header */
 .app-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--spacing);
-    padding: 12px 0;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
 }
 
-.app-header h1 {
-    font-size: 24px;
-    color: var(--primary-dark);
+.app-header h1{
+    font-size:22px;
+    font-weight:700;
+    color:#2e7d32;
 }
 
 .connection-status {
@@ -87,31 +85,29 @@ body {
 }
 
 /* Navigation */
-.main-nav {
-    display: flex;
-    gap: 4px;
-    background: white;
-    padding: 8px;
-    border-radius: 30px;
-    margin-bottom: var(--spacing);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+.main-nav{
+    display:flex;
+    gap:6px;
+    background:white;
+    padding:6px;
+    border-radius:30px;
+    margin-bottom:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.08);
 }
 
-.nav-btn {
-    flex: 1;
-    padding: 12px;
-    border: none;
-    background: transparent;
-    border-radius: 25px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s;
+.nav-btn{
+    flex:1;
+    padding:10px;
+    border:none;
+    border-radius:20px;
+    font-size:14px;
+    font-weight:600;
+    background:transparent;
 }
 
-.nav-btn.active {
-    background: var(--primary-color);
-    color: white;
+.nav-btn.active{
+    background:var(--primary-color);
+    color:white;
 }
 
 /* Views */
@@ -131,26 +127,22 @@ body {
     margin-bottom: var(--spacing);
 }
 
-.stat-card {
-    background: var(--card-bg);
-    padding: 20px;
-    border-radius: var(--border-radius);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    text-align: center;
+.stat-card{
+    background:white;
+    padding:22px;
+    border-radius:16px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.08);
+    text-align:center;
+    transition:0.2s;
 }
 
-.stat-label {
-    display: block;
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 8px;
+.stat-card:hover{
+    transform:translateY(-3px);
 }
 
-.stat-value {
-    display: block;
-    font-size: 32px;
-    font-weight: bold;
-    color: var(--primary-dark);
+.stat-value{
+    font-size:30px;
+    font-weight:700;
 }
 
 /* Recent Activity */
@@ -225,69 +217,48 @@ body {
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.inventory-item {
-    display: flex;
-    align-items: center;
-    padding: var(--spacing);
-    border-bottom: 1px solid #eee;
-    animation: slideIn 0.3s ease;
+.inventory-item{
+    display:flex;
+    align-items:center;
+    padding:16px;
+    border-bottom:1px solid #f1f1f1;
 }
 
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.item-name{
+    font-size:16px;
+    font-weight:600;
 }
 
-.item-info {
-    flex: 1;
+.item-barcode{
+    font-size:12px;
+    color:#888;
 }
 
-.item-name {
-    font-weight: 600;
-    margin-bottom: 4px;
+.item-quantity{
+    font-size:16px;
 }
-
-.item-barcode {
-    font-size: 12px;
-    color: #999;
-    margin-bottom: 4px;
-}
-
-.item-quantity {
-    font-weight: 600;
-    color: var(--primary-dark);
-}
-
 .item-controls {
     display: flex;
     gap: 8px;
 }
 
-.quantity-btn {
-    width: 40px;
-    height: 40px;
-    border: none;
-    border-radius: 50%;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s;
+.quantity-btn{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    border:none;
+    font-size:18px;
+    font-weight:bold;
 }
 
-.quantity-btn.increase {
-    background: var(--primary-color);
-    color: white;
+.quantity-btn.increase{
+    background:#4CAF50;
+    color:white;
 }
 
-.quantity-btn.decrease {
-    background: var(--danger-color);
-    color: white;
+.quantity-btn.decrease{
+    background:#f44336;
+    color:white;
 }
 
 .quantity-btn:active {
@@ -295,12 +266,12 @@ body {
 }
 
 /* Scanner */
-.scanner-container {
-    background: #000;
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    margin-bottom: var(--spacing);
-    min-height: 300px;
+.scanner-container{
+    background:black;
+    border-radius:16px;
+    overflow:hidden;
+    margin-bottom:20px;
+    min-height:320px;
 }
 
 #reader {
@@ -357,15 +328,12 @@ body {
     display: flex;
 }
 
-.modal-content {
-    background: white;
-    padding: var(--spacing);
-    border-radius: var(--border-radius);
-    width: 100%;
-    max-width: 400px;
-    max-height: 90vh;
-    overflow-y: auto;
-    animation: modalSlideIn 0.3s ease;
+.modal-content{
+    background:white;
+    padding:24px;
+    border-radius:16px;
+    width:100%;
+    max-width:400px;
 }
 
 @keyframes modalSlideIn {
@@ -395,15 +363,13 @@ body {
 }
 
 .form-group input,
-.form-group textarea,
-.form-group select {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 16px;
+.form-group textarea{
+    width:100%;
+    padding:14px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    font-size:16px;
 }
-
 .modal-actions {
     display: flex;
     gap: 8px;
@@ -426,20 +392,15 @@ body {
 }
 
 /* Toast Notifications */
-.toast {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0,0,0,0.8);
-    color: white;
-    padding: 12px 24px;
-    border-radius: 25px;
-    font-size: 14px;
-    z-index: 1001;
-    animation: slideUp 0.3s ease;
-    max-width: 90%;
-    text-align: center;
+.toast{
+    position:fixed;
+    bottom:30px;
+    left:50%;
+    transform:translateX(-50%);
+    background:#333;
+    color:white;
+    padding:14px 24px;
+    border-radius:30px;
 }
 
 @keyframes slideUp {

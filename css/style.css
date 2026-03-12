@@ -328,12 +328,25 @@ body {
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.inventory-item {
-    display: flex;
-    align-items: center;
-    padding: var(--spacing);
-    border-bottom: 1px solid #eee;
-    animation: slideIn 0.3s ease;
+.inventory-item{
+    display:flex;
+    align-items:center;
+    padding:16px;
+    border-bottom:1px solid #f1f1f1;
+}
+
+.item-name{
+    font-size:16px;
+    font-weight:600;
+}
+
+.item-barcode{
+    font-size:12px;
+    color:#888;
+}
+
+.item-quantity{
+    font-size:16px;
 }
 
 @keyframes slideIn {

@@ -1,4 +1,6 @@
 // Barcode Scanner Module
+
+
 const cameras = await Html5Qrcode.getCameras();
 
 if (cameras && cameras.length) {

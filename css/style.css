@@ -60,31 +60,47 @@ body {
 
 .main-nav{
     display:flex;
-    justify-content:space-around;
+    gap:6px;
     background:white;
-    border-bottom:1px solid #ddd;
+    padding:6px;
+    border-radius:30px;
+    margin-bottom:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.08);
 }
 
 .nav-btn{
-    padding:12px;
+    flex:1;
+    padding:10px;
     border:none;
-    background:none;
-    font-size:16px;
+    border-radius:20px;
+    font-size:14px;
+    font-weight:600;
+    background:transparent;
 }
 
 .nav-btn.active{
-    color:#4CAF50;
-    border-bottom:3px solid #4CAF50;
+    background:var(--primary-color);
+    color:white;
 }
 
 /* cards */
 
 .stat-card{
     background:white;
-    padding:20px;
-    border-radius:10px;
-    box-shadow:0 3px 8px rgba(0,0,0,0.1);
+    padding:22px;
+    border-radius:16px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.08);
     text-align:center;
+    transition:0.2s;
+}
+
+.stat-card:hover{
+    transform:translateY(-3px);
+}
+
+.stat-value{
+    font-size:30px;
+    font-weight:700;
 }
 
 /* buttons */

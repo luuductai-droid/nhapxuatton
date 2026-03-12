@@ -1,264 +1,231 @@
-// Barcode Scanner Module
+class BarcodeScanner {
 
-const cameras = await Html5Qrcode.getCameras();
+constructor(onScanSuccess,onScanError){
 
-if (!cameras || cameras.length === 0) {
-    alert("Không tìm thấy camera");
-    return;
+this.onScanSuccess=onScanSuccess
+this.onScanError=onScanError
+this.scanner=null
+this.isScanning=false
+
 }
 
-// tìm camera sau
-let cameraId = cameras[cameras.length - 1].id;
+async initialize(){
 
-for (let i = 0; i < cameras.length; i++) {
+try{
 
-    const label = cameras[i].label.toLowerCase();
+await navigator.mediaDevices.getUserMedia({video:true})
 
-    if (
-        label.includes("back") ||
-        label.includes("rear") ||
-        label.includes("environment")
-    ) {
-        cameraId = cameras[i].id;
-        break;
-    }
+this.scanner=new Html5Qrcode("reader")
+
+return true
+
+}catch(error){
+
+console.error(error)
+return false
+
+}
+
+}
+
+async start(){
+
+if(this.isScanning) return
+
+try{
+
+const config={
+fps:25,
+
+qrbox:function(width,height){
+
+const size=Math.min(width,height)*0.9
+
+return{
+width:size,
+height:size
+}
+
+},
+
+aspectRatio:1.777
+}
+
+const cameras=await Html5Qrcode.getCameras()
+
+if(!cameras || cameras.length===0){
+
+alert("Không tìm thấy camera")
+return
+
+}
+
+let cameraId=cameras[cameras.length-1].id
+
+for(let i=0;i<cameras.length;i++){
+
+const label=cameras[i].label.toLowerCase()
+
+if(
+label.includes("back")||
+label.includes("rear")||
+label.includes("environment")
+){
+
+cameraId=cameras[i].id
+break
+
+}
 
 }
 
 await this.scanner.start(
-    cameraId,
-    config,
-    this.handleScanSuccess.bind(this),
-    this.handleScanError.bind(this)
-);
-const cameras = await Html5Qrcode.getCameras();
+cameraId,
+config,
+this.handleScanSuccess.bind(this),
+this.handleScanError.bind(this)
+)
 
-if (cameras && cameras.length) {
-    const cameraId = cameras[0].id;
+this.isScanning=true
 
-    await this.scanner.start(
-        cameraId,
-        config,
-        this.handleScanSuccess.bind(this),
-        this.handleScanError.bind(this)
-    );
+document.getElementById("startScanBtn").style.display="none"
+document.getElementById("stopScanBtn").style.display="block"
+
+}catch(error){
+
+console.error(error)
+
+if(this.onScanError){
+this.onScanError(error.message)
 }
 
-async initialize() {
-
-    try {
-
-        await navigator.mediaDevices.getUserMedia({ video: true });
-
-        const devices = await navigator.mediaDevices.enumerateDevices();
-
-        const hasCamera = devices.some(device => device.kind === 'videoinput');
-
-        if (!hasCamera) {
-            throw new Error("No camera found");
-        }
-
-        this.scanner = new Html5Qrcode("reader");
-
-        return true;
-
-    } catch (error) {
-
-        console.error(error);
-
-        return false;
-
-    }
+}
 
 }
-async start() {
 
-    if (this.isScanning) {
-        return;
-    }
+stop(){
 
-    try {
+if(this.scanner && this.isScanning){
 
-        const config = {
-            fps: 10,
-            qrbox: 250,
-            aspectRatio: 1.777
-        };
+this.scanner.stop()
 
-        // lấy danh sách camera
-        const cameras = await Html5Qrcode.getCameras();
+this.isScanning=false
 
-        if (!cameras || cameras.length === 0) {
-            throw new Error("No camera found");
-        }
-
-        // camera sau (thường là camera cuối)
-        const cameraId = cameras[cameras.length - 1].id;
-
-        await this.scanner.start(
-            cameraId,
-            config,
-            this.handleScanSuccess.bind(this),
-            this.handleScanError.bind(this)
-        );
-
-        this.isScanning = true;
-
-        document.getElementById('startScanBtn').style.display = 'none';
-        document.getElementById('stopScanBtn').style.display = 'block';
-
-    } catch (error) {
-
-        console.error('Failed to start scanner:', error);
-
-        if (this.onScanError) {
-            this.onScanError(error.message);
-        }
-
-    }
+document.getElementById("startScanBtn").style.display="block"
+document.getElementById("stopScanBtn").style.display="none"
 
 }
- async start() {
-        if (this.isScanning) {
-            return;
-        }
-
-        try {
-            const qrboxFunction = function(viewfinderWidth, viewfinderHeight) {
-                const minEdgePercentage = 0.7;
-                const minEdgeSize = Math.min(viewfinderWidth, viewfinderHeight);
-                const qrboxSize = Math.floor(minEdgeSize * minEdgePercentage);
-                
-                return {
-                    width: qrboxSize,
-                    height: qrboxSize
-                };
-            };
-
-            const config = {
-                fps: 10,
-                qrbox: qrboxFunction,
-                aspectRatio: 1.0,
-                formatsToSupport: [
-                    Html5QrcodeSupportedFormats.EAN_13,
-                    Html5QrcodeSupportedFormats.EAN_8,
-                    Html5QrcodeSupportedFormats.UPC_A,
-                    Html5QrcodeSupportedFormats.UPC_E,
-                    Html5QrcodeSupportedFormats.CODE_39,
-                    Html5QrcodeSupportedFormats.CODE_128,
-                    Html5QrcodeSupportedFormats.QR_CODE
-                ]
-            };
-
-            await this.scanner.start(
-                { facingMode: "environment" },
-                config,
-                this.handleScanSuccess.bind(this),
-                this.handleScanError.bind(this)
-            );
-
-            this.isScanning = true;
-            document.getElementById('startScanBtn').style.display = 'none';
-            document.getElementById('stopScanBtn').style.display = 'block';
-            
-        } catch (error) {
-            console.error('Failed to start scanner:', error);
-            if (this.onScanError) {
-                this.onScanError(error.message);
-            }
-        }
-    }
-
-    stop() {
-        if (this.scanner && this.isScanning) {
-            this.scanner.stop()
-                .then(() => {
-                    this.isScanning = false;
-                    document.getElementById('startScanBtn').style.display = 'block';
-                    document.getElementById('stopScanBtn').style.display = 'none';
-                })
-                .catch(error => {
-                    console.error('Failed to stop scanner:', error);
-                });
-        }
-    }
-
-    handleScanSuccess(decodedText, decodedResult) {
-        // Vibrate if supported
-        if (navigator.vibrate) {
-            navigator.vibrate(200);
-        }
-
-        // Play beep sound
-        this.playBeep();
-
-        if (this.onScanSuccess) {
-            this.onScanSuccess(decodedText);
-        }
-
-        // Optional: Auto-stop after successful scan
-        // this.stop();
-    }
-
-    handleScanError(error) {
-        // Ignore common errors that don't affect functionality
-        if (error.includes('No MultiFormat Readers were able to detect')) {
-            return;
-        }
-        
-        console.warn('Scan error:', error);
-        if (this.onScanError) {
-            this.onScanError(error);
-        }
-    }
-
-    playBeep() {
-        try {
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-
-            oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
-            gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
-
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.1);
-
-            // Clean up
-            oscillator.onended = () => {
-                oscillator.disconnect();
-                gainNode.disconnect();
-            };
-        } catch (error) {
-            console.log('Beep not supported');
-        }
-    }
-
-    isScanningActive() {
-        return this.isScanning;
-    }
-}
-const scanner = new Html5Qrcode("reader");
-
-document.getElementById("startScanBtn").onclick = () => {
-
-scanner.start(
-{ facingMode: "environment" },
-{
-fps: 10,
-qrbox: 250
-},
-(decodedText) => {
-
-console.log("Barcode:", decodedText);
 
 }
-);
 
-};
-document.getElementById("stopScanBtn").onclick = () => {
-scanner.stop();
-};
+async handleScanSuccess(barcode){
+
+if(navigator.vibrate){
+navigator.vibrate(200)
+}
+
+this.playBeep()
+
+document.getElementById("scanResult").innerHTML=
+"<div class='scan-box'>Barcode: "+barcode+"</div>"
+
+await this.lookupProduct(barcode)
+
+}
+
+handleScanError(err){
+
+if(err.includes("No MultiFormat")){
+return
+}
+
+console.warn(err)
+
+}
+
+async lookupProduct(barcode){
+
+try{
+
+const url=API_URL+"?action=getByBarcode&barcode="+barcode
+
+const res=await fetch(url)
+
+const data=await res.json()
+
+if(data.success){
+
+this.showProduct(data.data)
+
+}else{
+
+this.showAddProduct(barcode)
+
+}
+
+}catch(e){
+
+console.error(e)
+
+}
+
+}
+
+showProduct(product){
+
+const html=`
+
+<div class="product-card">
+
+<h3>${product.productName}</h3>
+
+<p>Barcode: ${product.barcode}</p>
+
+<p>Stock: ${product.quantity}</p>
+
+<button onclick="updateStock('${product.barcode}',1)">➕ Nhập kho</button>
+
+<button onclick="updateStock('${product.barcode}',-1)">➖ Xuất kho</button>
+
+</div>
+
+`
+
+document.getElementById("scanResult").innerHTML=html
+
+}
+
+showAddProduct(barcode){
+
+document.getElementById("modalBarcode").value=barcode
+document.getElementById("modalBarcodeDisplay").value=barcode
+
+document.getElementById("productModal").style.display="block"
+
+}
+
+playBeep(){
+
+try{
+
+const ctx=new(window.AudioContext||window.webkitAudioContext)()
+
+const osc=ctx.createOscillator()
+
+const gain=ctx.createGain()
+
+osc.connect(gain)
+gain.connect(ctx.destination)
+
+osc.frequency.value=800
+
+gain.gain.value=0.5
+
+osc.start()
+osc.stop(ctx.currentTime+0.1)
+
+}catch(e){}
+
+}
+
+}

@@ -33,13 +33,17 @@ body {
 
 /* header */
 
-.app-header{
-    background:#4CAF50;
-    color:white;
-    padding:15px;
+.app-header {
     display:flex;
     justify-content:space-between;
     align-items:center;
+    margin-bottom:20px;
+}
+
+.app-header h1{
+    font-size:22px;
+    font-weight:700;
+    color:#2e7d32;
 }
 
 .logo-area{

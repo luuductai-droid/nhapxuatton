@@ -39,7 +39,53 @@ async initialize() {
     }
 
 }
+async start() {
 
+    if (this.isScanning) {
+        return;
+    }
+
+    try {
+
+        const config = {
+            fps: 10,
+            qrbox: 250,
+            aspectRatio: 1.777
+        };
+
+        // lấy danh sách camera
+        const cameras = await Html5Qrcode.getCameras();
+
+        if (!cameras || cameras.length === 0) {
+            throw new Error("No camera found");
+        }
+
+        // camera sau (thường là camera cuối)
+        const cameraId = cameras[cameras.length - 1].id;
+
+        await this.scanner.start(
+            cameraId,
+            config,
+            this.handleScanSuccess.bind(this),
+            this.handleScanError.bind(this)
+        );
+
+        this.isScanning = true;
+
+        document.getElementById('startScanBtn').style.display = 'none';
+        document.getElementById('stopScanBtn').style.display = 'block';
+
+    } catch (error) {
+
+        console.error('Failed to start scanner:', error);
+
+        if (this.onScanError) {
+            this.onScanError(error.message);
+        }
+
+    }
+
+}
  async start() {
         if (this.isScanning) {
             return;

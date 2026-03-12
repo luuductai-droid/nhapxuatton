@@ -1,6 +1,32 @@
 // Barcode Scanner Module
 
+async initialize() {
 
+    try {
+
+        await navigator.mediaDevices.getUserMedia({ video: true });
+
+        const devices = await navigator.mediaDevices.enumerateDevices();
+
+        const hasCamera = devices.some(device => device.kind === 'videoinput');
+
+        if (!hasCamera) {
+            throw new Error("No camera found");
+        }
+
+        this.scanner = new Html5Qrcode("reader");
+
+        return true;
+
+    } catch (error) {
+
+        console.error(error);
+
+        return false;
+
+    }
+
+}
     async start() {
         if (this.isScanning) {
             return;

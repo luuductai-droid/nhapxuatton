@@ -1,36 +1,6 @@
 // Main Application Logic
 
-class InventoryApp {
-    constructor() {
-        this.scanner = null;
-        this.products = [];
-        this.currentView = 'dashboard';
-        this.init();
-    }
-
-    async init() {
-        this.initEventListeners();
-        this.initLanguageSupport();
-        await this.loadInitialData();
-        this.initPWAInstall();
-        this.initScanner();
-        
-        // Load view based on hash
-        if (window.location.hash) {
-            this.switchView(window.location.hash.substring(1));
-        }
-    }
-
-    initEventListeners() {
-        // Navigation
-        document.querySelectorAll('.nav-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const view = e.target.getAttribute('data-view');
-                this.switchView(view);
-            });
-        });
-
-        // Language switcher
+     // Language switcher
         document.querySelectorAll('.lang-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const lang = e.target.getAttribute('data-lang');

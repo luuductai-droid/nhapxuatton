@@ -1,231 +1,32 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Inventory Scanner</title>
 
-<link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css?v=3">
 
-<link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
-
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#4CAF50">
+<script src="https://unpkg.com/html5-qrcode"></script>
 
 </head>
 
 <body>
 
-<div id="app">
+<h2>Inventory Scanner</h2>
 
-<!-- Language -->
-<div class="language-selector">
-<button class="lang-btn" data-lang="en">🇬🇧 English</button>
-<button class="lang-btn active" data-lang="vi">🇻🇳 Tiếng Việt</button>
-</div>
+<div id="connectionStatus">● Online</div>
 
-<!-- Header -->
-<header class="app-header">
-
-<div class="logo-area">
-
-<img src="assets/images/logo.png" class="logo" alt="logo">
-
-<h1>Inventory Scanner</h1>
-
-</div>
-
-<div class="connection-status" id="connectionStatus">
-● Online
-</div>
-
-</header>
-
-
-<!-- Navigation -->
-
-<nav class="main-nav">
-
-<button class="nav-btn active" data-view="dashboard">
-Tổng Quan
-</button>
-
-<button class="nav-btn" data-view="inventory">
-Kho Hàng
-</button>
-
-<button class="nav-btn" data-view="scanner">
-Quét Mã
-</button>
-
-</nav>
-
-
-<!-- Dashboard -->
-
-<div id="dashboard-view" class="view active">
-
-<div class="stats-grid">
-
-<div class="stat-card">
-<span class="stat-label">Tổng Sản Phẩm</span>
-<span class="stat-value" id="totalProducts">0</span>
-</div>
-
-<div class="stat-card">
-<span class="stat-label">Sắp Hết Hàng</span>
-<span class="stat-value" id="lowStockCount">0</span>
-</div>
-
-</div>
-
-
-<div class="recent-activity">
-
-<h3>Hoạt Động Gần Đây</h3>
-
-<div id="recentActivityList" class="activity-list"></div>
-
-</div>
-
-</div>
-
-
-<!-- Inventory -->
-
-<div id="inventory-view" class="view">
-
-<div class="search-bar">
-
-<input
-type="text"
-id="searchInput"
-placeholder="🔍 Tìm kiếm sản phẩm..."
->
-
-<button id="exportBtn" class="btn-secondary">
-Xuất CSV
-</button>
-
-</div>
-
-<div id="inventoryList" class="inventory-list"></div>
-
-</div>
-
-
-<!-- Scanner -->
-
-<div id="scanner-view" class="view">
-
-<div class="scanner-container">
+<button id="startScanBtn">Bắt đầu quét</button>
+<button id="stopScanBtn" style="display:none;">Dừng quét</button>
 
 <div id="reader"></div>
 
-</div>
+<div id="scanResult"></div>
 
-<div class="scanner-controls">
-
-<button id="startScanBtn" class="btn-primary">
-Bắt Đầu Quét
-</button>
-
-<button id="stopScanBtn" class="btn-secondary" style="display:none;">
-Dừng Quét
-</button>
-
-</div>
-
-<div id="scanResult" class="scan-result"></div>
-
-</div>
-
-
-
-<!-- Modal -->
-
-<div id="productModal" class="modal">
-
-<div class="modal-content">
-
-<h2>Thêm Sản Phẩm</h2>
-
-<form id="productForm">
-
-<input type="hidden" id="modalBarcode">
-
-<div class="form-group">
-
-<label>Mã Vạch</label>
-
-<input type="text" id="modalBarcodeDisplay" readonly>
-
-</div>
-
-
-<div class="form-group">
-
-<label>Tên Sản Phẩm</label>
-
-<input type="text" id="productName" required>
-
-</div>
-
-
-<div class="form-group">
-
-<label>Số Lượng Ban Đầu</label>
-
-<input type="number" id="initialQuantity" value="0">
-
-</div>
-
-
-<div class="form-group">
-
-<label>Ghi Chú</label>
-
-<textarea id="notes"></textarea>
-
-</div>
-
-
-<div class="modal-actions">
-
-<button type="button" class="btn-secondary" onclick="closeModal()">
-Huỷ
-</button>
-
-<button type="submit" class="btn-primary">
-Lưu
-</button>
-
-</div>
-
-</form>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<!-- Scripts -->
-
-<script src="libs/html5-qrcode.min.js"></script>
-
-<script src="js/i18n.js"></script>
-
-<script src="js/google-sheets-api.js"></script>
-
-<script src="js/barcode-scanner.js"></script>
-
-<script src="js/app.js"></script>
+<script src="js/barcode-scanner.js?v=3"></script>
+<script src="js/app.js?v=3"></script>
 
 </body>
 </html>

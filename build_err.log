@@ -1,0 +1,81 @@
+
+> tmp-app@0.1.0 build
+> next build
+
+▲ Next.js 16.1.6 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.8s
+  Running TypeScript ...
+  Collecting page data using 11 workers ...
+Error: Failed to collect configuration for /products
+    at ignore-listed frames {
+  [cause]: Error [PrismaClientInitializationError]: `PrismaClient` needs to be constructed with a non-empty, valid `PrismaClientOptions`:
+  
+  ```
+  new PrismaClient({
+    ...
+  })
+  ```
+  
+  or
+  
+  ```
+  constructor() {
+    super({ ... });
+  }
+  ```
+            
+      at module evaluation (D:\GitHub\nhapxuatton\.next\server\chunks\ssr\[root-of-the-server]__880324a9._.js:1:487)
+      at instantiateModule (D:\GitHub\nhapxuatton\.next\server\chunks\ssr\[turbopack]_runtime.js:740:9)
+      at getOrInstantiateModuleFromParent (D:\GitHub\nhapxuatton\.next\server\chunks\ssr\[turbopack]_runtime.js:763:12)
+      at Context.esmImport [as i] (D:\GitHub\nhapxuatton\.next\server\chunks\ssr\[turbopack]_runtime.js:228:20)
+      at module evaluation (D:\GitHub\nhapxuatton\.next\server\chunks\ssr\[root-of-the-server]__880324a9._.js:1:3313)
+      at instantiateModule (D:\GitHub\nhapxuatton\.next\server\chunks\ssr\[turbopack]_runtime.js:740:9)
+      at getOrInstantiateModuleFromParent (D:\GitHub\nhapxuatton\.next\server\chunks\ssr\[turbopack]_runtime.js:763:12)
+      at Context.esmImport [as i] (D:\GitHub\nhapxuatton\.next\server\chunks\ssr\[turbopack]_runtime.js:228:20)
+      at module evaluation (D:\GitHub\nhapxuatton\.next\server\chunks\ssr\_d03254c9._.js:1:33) {
+    clientVersion: '7.5.0',
+    errorCode: undefined,
+    retryable: undefined
+  }
+}
+Error: Failed to collect configuration for /
+    at ignore-listed frames {
+  [cause]: Error [PrismaClientInitializationError]: `PrismaClient` needs to be constructed with a non-empty, valid `PrismaClientOptions`:
+  
+  ```
+  new PrismaClient({
+    ...
+  })
+  ```
+  
+  or
+  
+  ```
+  constructor() {
+    super({ ... });
+  }
+  ```
+            
+      at module evaluation (D:\GitHub\nhapxuatton\.next\server\chunks\ssr\[root-of-the-server]__429af2fb._.js:1:487)
+      at instantiateModule (D:\GitHub\nhapxuatton\.next\server\chunks\ssr\[turbopack]_runtime.js:740:9)
+      at getOrInstantiateModuleFromParent (D:\GitHub\nhapxuatton\.next\server\chunks\ssr\[turbopack]_runtime.js:763:12)
+      at Context.esmImport [as i] (D:\GitHub\nhapxuatton\.next\server\chunks\ssr\[turbopack]_runtime.js:228:20)
+      at module evaluation (D:\GitHub\nhapxuatton\.next\server\chunks\ssr\[root-of-the-server]__429af2fb._.js:1:1741)
+      at instantiateModule (D:\GitHub\nhapxuatton\.next\server\chunks\ssr\[turbopack]_runtime.js:740:9)
+      at getOrInstantiateModuleFromParent (D:\GitHub\nhapxuatton\.next\server\chunks\ssr\[turbopack]_runtime.js:763:12)
+      at Context.esmImport [as i] (D:\GitHub\nhapxuatton\.next\server\chunks\ssr\[turbopack]_runtime.js:228:20)
+      at module evaluation (D:\GitHub\nhapxuatton\.next\server\chunks\ssr\_25e6aab8._.js:1:33) {
+    clientVersion: '7.5.0',
+    errorCode: undefined,
+    retryable: undefined
+  }
+}
+
+> Build error occurred
+Error: Failed to collect page data for /products
+    at ignore-listed frames {
+  type: 'Error'
+}

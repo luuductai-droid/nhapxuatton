@@ -1,0 +1,71 @@
+
+> tmp-app@0.1.0 build
+> next build
+
+▲ Next.js 16.1.6 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 3 errors:
+./src/lib/auth.ts:38:17
+Ecmascript file had an error
+[0m [90m 36 |[39m
+ [90m 37 |[39m [90m/** Kiểm tra quyền chỉnh sửa sản phẩm (ADMIN và MANAGER) */[39m
+[31m[1m>[22m[39m[90m 38 |[39m [36mexport[39m [36mfunction[39m canEditProducts(role[33m:[39m [33mRole[39m)[33m:[39m boolean {
+ [90m    |[39m                 [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 39 |[39m   [36mreturn[39m role [33m===[39m [32m'ADMIN'[39m [33m||[39m role [33m===[39m [32m'MANAGER'[39m
+ [90m 40 |[39m }
+ [90m 41 |[39m[0m
+
+Server Actions must be async functions.
+
+
+Import trace:
+  Server Component:
+    ./src/lib/auth.ts
+    ./src/app/products/page.tsx
+
+
+./src/lib/auth.ts:43:17
+Ecmascript file had an error
+[0m [90m 41 |[39m
+ [90m 42 |[39m [90m/** Kiểm tra quyền xóa sản phẩm (chỉ ADMIN) */[39m
+[31m[1m>[22m[39m[90m 43 |[39m [36mexport[39m [36mfunction[39m canDeleteProducts(role[33m:[39m [33mRole[39m)[33m:[39m boolean {
+ [90m    |[39m                 [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 44 |[39m   [36mreturn[39m role [33m===[39m [32m'ADMIN'[39m
+ [90m 45 |[39m }
+ [90m 46 |[39m[0m
+
+Server Actions must be async functions.
+
+
+Import trace:
+  Server Component:
+    ./src/lib/auth.ts
+    ./src/app/products/page.tsx
+
+
+./src/lib/auth.ts:48:17
+Ecmascript file had an error
+[0m [90m 46 |[39m
+ [90m 47 |[39m [90m/** Kiểm tra quyền quản lý người dùng (chỉ ADMIN) */[39m
+[31m[1m>[22m[39m[90m 48 |[39m [36mexport[39m [36mfunction[39m canManageUsers(role[33m:[39m [33mRole[39m)[33m:[39m boolean {
+ [90m    |[39m                 [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 49 |[39m   [36mreturn[39m role [33m===[39m [32m'ADMIN'[39m
+ [90m 50 |[39m }
+ [90m 51 |[39m[0m
+
+Server Actions must be async functions.
+
+
+Import trace:
+  Server Component:
+    ./src/lib/auth.ts
+    ./src/app/products/page.tsx
+
+
+    at <unknown> (./src/lib/auth.ts:38:17)
+    at <unknown> (./src/lib/auth.ts:43:17)
+    at <unknown> (./src/lib/auth.ts:48:17)

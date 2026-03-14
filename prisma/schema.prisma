@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  phone     String?
+  password  String?  // Sẽ được Admin cấp khi duyệt
+  role      String   @default("VIEWER") // ADMIN | MANAGER | VIEWER
+  status    String   @default("PENDING") // PENDING | APPROVED
+  // Quyền hạn chi tiết
+  canInbound        Boolean @default(false)
+  canOutbound       Boolean @default(false)
+  canManageProducts Boolean @default(false)
+  canDeleteProducts Boolean @default(false)
+  canManageUsers    Boolean @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Product {
+  id           String        @id @default(cuid())
+  name         String
+  barcode      String        // Gỡ bỏ @unique để cho phép cấu hình linh hoạt
+  price        Float         @default(0)
+  unit         String        @default("cái")
+  stock        Int           @default(0)
+  transactions Transaction[]
+  allowDuplicate Boolean       @default(false) // Cho phép trùng lặp mã vạch cho sp này
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+}
+
+model Transaction {
+  id        String   @id @default(cuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  type      String   // "IN" (Nhập) hoặc "OUT" (Xuất)
+  quantity  Int
+  note      String?
+  createdAt DateTime @default(now())
+}
+
+model SystemSetting {
+  id    String @id @default(cuid())
+  key   String @unique
+  value String
+}
